@@ -13,7 +13,7 @@ def get_all_pages():
     }
     result = []
 
-    r = requests.get(url="https://363-5005.рф/product-category/krepezh/shajby/", headers=headers)
+    r = requests.get(url="https://363-5005.рф/product-category/krepezh/shponki/", headers=headers)
 
     if not os.path.exists("data"):
         os.mkdir("data")
@@ -39,7 +39,7 @@ def get_all_pages():
     for item in range(0, len(mainHref)):
         urlr = mainHref[item]["href"]
         print(mainHref[item]["header"])
-        result.append({"header": mainHref[item]["header"]})
+        block = {"id": item, "header": mainHref[item]["header"]}
 
         rr = requests.get(url=urlr, headers=headers)
 
@@ -131,7 +131,7 @@ def get_all_pages():
                         for img in image:
                             images.append(img.find("img").get("src"))
 
-                        itemsProduct.append({"title": title, "price": price, "text": text, "table": data, "images": images})
+                        itemsProduct.append({"id": g, "title": title, "price": price, "text": text, "table": data, "images": images})
                         print(g)
                 else:
                     pagUrl = url2
@@ -183,9 +183,10 @@ def get_all_pages():
                         for img in image:
                             images.append(img.find("img").get("src"))
 
-                        itemsProduct.append({"title": title, "price": price, "text": text, "table": data, "images": images})
+                        itemsProduct.append({"id": g, "title": title, "price": price, "text": text, "table": data, "images": images})
                         print(g)
-                result.append(itemsProduct)
+                block["items"] = itemsProduct
+                result.append(block)
         else:
             itemsProduct = []
             itemHrefAll = []
@@ -246,9 +247,10 @@ def get_all_pages():
                     for img in image:
                         images.append(img.find("img").get("src"))
 
-                    itemsProduct.append({"title": title, "price": price, "text": text, "table": data, "images": images})
+                    itemsProduct.append({"id": g, "title": title, "price": price, "text": text, "table": data, "images": images})
                     print(g)
-                result.append(itemsProduct)
+                block["items"] = itemsProduct
+                result.append(block)
             else:
                 pagUrl = urlr
 
@@ -299,9 +301,10 @@ def get_all_pages():
                     for img in image:
                         images.append(img.find("img").get("src"))
 
-                    itemsProduct.append({"title": title, "price": price, "text": text, "table": data, "images": images})
+                    itemsProduct.append({"id": g, "title": title, "price": price, "text": text, "table": data, "images": images})
                     print(g)
-                result.append(itemsProduct)
+                block["items"] = itemsProduct
+                result.append(block)
     with open("data.json", "a") as file:
         json.dump(result, file, indent=4, ensure_ascii=False)
 
