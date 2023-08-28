@@ -13,7 +13,7 @@ def get_all_pages():
     }
     result = []
 
-    r = requests.get(url="https://363-5005.рф/product-category/krepezh/shponki/", headers=headers)
+    r = requests.get(url="https://363-5005.рф/product-category/krepezh/shpilki/", headers=headers)
 
     if not os.path.exists("data"):
         os.mkdir("data")
@@ -40,6 +40,7 @@ def get_all_pages():
         urlr = mainHref[item]["href"]
         print(mainHref[item]["header"])
         block = {"id": item, "header": mainHref[item]["header"]}
+        headerSecond = []
 
         rr = requests.get(url=urlr, headers=headers)
 
@@ -62,8 +63,10 @@ def get_all_pages():
             for item2 in range(0, len(mainHrefSecond)):
                 itemHrefAll = []
                 url2 = mainHrefSecond[item2]["href"]
-                result.append({"headerSecond": mainHrefSecond[item2]["header"]})
-                print(mainHrefSecond[item2]["header"])
+                # result.append({"headerSecond": mainHrefSecond[item2]["header"]})
+                blockTypeProduct = {"id": item2, "type": mainHrefSecond[item2]["header"]}
+                itemsProductItems = []
+                print(mainHrefSecond[item2]["header"] + "type")
                 url22 = f"{url2}page/{1}/"
 
                 r2 = requests.get(url=url22, headers=headers)
@@ -131,7 +134,7 @@ def get_all_pages():
                         for img in image:
                             images.append(img.find("img").get("src"))
 
-                        itemsProduct.append({"id": g, "title": title, "price": price, "text": text, "table": data, "images": images})
+                        itemsProductItems.append({"id": g, "title": title, "price": price, "text": text, "table": data, "images": images})
                         print(g)
                 else:
                     pagUrl = url2
@@ -183,10 +186,13 @@ def get_all_pages():
                         for img in image:
                             images.append(img.find("img").get("src"))
 
-                        itemsProduct.append({"id": g, "title": title, "price": price, "text": text, "table": data, "images": images})
+                        itemsProductItems.append({"id": g, "title": title, "price": price, "text": text, "table": data, "images": images})
                         print(g)
-                block["items"] = itemsProduct
-                result.append(block)
+
+                blockTypeProduct["items"] = itemsProductItems
+                headerSecond.append(blockTypeProduct)
+            block["headerSecond"] = headerSecond
+            result.append(block)
         else:
             itemsProduct = []
             itemHrefAll = []
