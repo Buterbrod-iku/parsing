@@ -13,7 +13,7 @@ def get_all_pages():
     }
     result = []
 
-    r = requests.get(url="https://363-5005.рф/product-category/krepezh/shpilki/", headers=headers)
+    r = requests.get(url="https://363-5005.рф/product-category/krepezh/komplektujushhie-dlya-otdelochnyh-rabot/", headers=headers)
 
     if not os.path.exists("data"):
         os.mkdir("data")
