@@ -63,7 +63,6 @@ def get_all_pages():
             for item2 in range(0, len(mainHrefSecond)):
                 itemHrefAll = []
                 url2 = mainHrefSecond[item2]["href"]
-                # result.append({"headerSecond": mainHrefSecond[item2]["header"]})
                 blockTypeProduct = {"id": item2, "type": mainHrefSecond[item2]["header"]}
                 itemsProductItems = []
                 print(mainHrefSecond[item2]["header"] + "type")
